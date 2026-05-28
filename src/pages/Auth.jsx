@@ -32,7 +32,6 @@ export default function Auth() {
     } else {
       setError(result.error);
     }
-    console.log(result);
   }
 
   return (
@@ -40,9 +39,11 @@ export default function Auth() {
       <div className="container">
         <div className="auth-container">
           {user && <p>User logged in: {user.email}</p>}
-          <button className="btn btn-secondary" onClick={logout}>
-            Logout
-          </button>
+          {user && (
+            <button className="btn btn-secondary" onClick={logout}>
+              Logout
+            </button>
+          )}
           <h1 className="page-title">
             {mode === "signup" ? "Sign Up" : "Login"}
           </h1>
