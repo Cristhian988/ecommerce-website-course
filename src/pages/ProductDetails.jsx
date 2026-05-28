@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getProductById } from "../data/products";
 import { useEffect } from "react";
+import { useCart } from "../context/CartContext";
 
 export default function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { addToCart, cartItems } = useCart();
 
   useEffect(() => {
     let isMounted = true;
@@ -41,6 +43,12 @@ export default function ProductDetails() {
     return <div>Product not found</div>;
   }
 
+  const productInCart = cartItems.find((item) => item.id === product.id);
+
+  const productQuantityLabel = productInCart
+    ? `(${productInCart.quantity})`
+    : "";
+
   return (
     <div className="page">
       <div className="container">
@@ -54,9 +62,9 @@ export default function ProductDetails() {
             <p className="product-detail-description">{product.description}</p>
             <button
               className="btn btn-primary"
-              onClick={() => navigate("/checkout")}
+              onClick={() => addToCart(product.id)}
             >
-              Add to Cart
+              Add to Cart {productQuantityLabel}
             </button>
           </div>
         </div>
