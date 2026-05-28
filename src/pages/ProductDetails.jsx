@@ -19,10 +19,11 @@ export default function ProductDetails() {
       if (isMounted) {
         if (!foundProduct) {
           navigate("/");
+          return;
         } else {
           setProduct(foundProduct);
+          setLoading(false);
         }
-        setLoading(false);
       }
     };
 
@@ -35,6 +36,9 @@ export default function ProductDetails() {
 
   if (loading) {
     return <div>Loading...</div>;
+  }
+  if (!product) {
+    return <div>Product not found</div>;
   }
 
   return (
