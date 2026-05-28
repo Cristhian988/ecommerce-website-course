@@ -1,3 +1,116 @@
+import { useContext } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 export default function Auth() {
-  return <div>Auth</div>;
+  const [mode, setMode] = useState("signup");
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
+
+  const { signUp, user, login, logout } = useContext(AuthContext);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  function onSubmit(data) {
+    setError(null);
+    let result;
+    if (mode === "signup") {
+      result = signUp(data.email, data.password);
+    } else {
+      result = login(data.email, data.password);
+    }
+
+    if (result.success) {
+      navigate("/");
+    } else {
+      setError(result.error);
+    }
+    console.log(result);
+  }
+
+  return (
+    <div className="page">
+      <div className="container">
+        <div className="auth-container">
+          {user && <p>User logged in: {user.email}</p>}
+          <button className="btn btn-secondary" onClick={logout}>
+            Logout
+          </button>
+          <h1 className="page-title">
+            {mode === "signup" ? "Sign Up" : "Login"}
+          </h1>
+          <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
+            {error && <p className="error-message">{error}</p>}
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="form-input"
+                {...register("email", { required: "Email is required" })}
+              />
+              {errors.email && (
+                <p className="form-error">{errors.email.message}</p>
+              )}
+            </div>
+            <div className="form-group">
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                className="form-input"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters long",
+                  },
+                  maxLength: {
+                    value: 12,
+                    message: "Password must be at most 12 characters long",
+                  },
+                })}
+              />
+              {errors.password && (
+                <p className="form-error">{errors.password.message}</p>
+              )}
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-large">
+              {mode === "signup" ? "Sign Up" : "Login"}
+            </button>
+          </form>
+
+          <div className="auth-switch">
+            {mode === "signup" ? (
+              <p>
+                Already have an account?{" "}
+                <span className="auth-link" onClick={() => setMode("login")}>
+                  Login
+                </span>
+              </p>
+            ) : (
+              <p>
+                Don't have an account?{" "}
+                <span className="auth-link" onClick={() => setMode("signup")}>
+                  Sign Up
+                </span>
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
