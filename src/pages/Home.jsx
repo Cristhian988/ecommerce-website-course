@@ -7,9 +7,8 @@ export default function Home() {
       <div className="home-hero">
         <h1 className="home-title">Welcome to ShopHub</h1>
         <p className="home-subtitle">
-          ShopHub is a simple e-commerce website built using React.js and
-          Tailwind CSS. It allows you to browse and purchase products from a
-          variety of categories.
+          ShopHub is a simple e-commerce website built using React.js. It allows
+          you to browse and purchase products from a variety of categories.
         </p>
       </div>
       <div className="container">
