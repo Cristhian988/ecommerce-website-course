@@ -12,10 +12,13 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: "24"
 
       - name: Instalar dependencias
         run: npm install
 
       - name: Ejecutar Linter
         run: npm run lint
+
+      - name: Validar tipos
+        run: npx tsc --noEmit
