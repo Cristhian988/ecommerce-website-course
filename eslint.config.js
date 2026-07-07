@@ -16,7 +16,6 @@ export default defineConfig([
     rules:{
       'no-unused-vars': 'error',     // Bloquea si hay variables sin usar
       'no-console': 'warn',         // Mantiene los console.log como advertencia (no bloquean)
-      'react/prop-types': 'off',    // Si no usas TypeScript, esto evita falsos positivos
       'no-undef': 'error'           // Bloquea si intentas usar algo que no existe
       // Puedes añadir más reglas según necesites
     },
