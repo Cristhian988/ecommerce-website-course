@@ -3,6 +3,7 @@ import ProductCard from "../components/ProductCard";
 
 export default function Home() {
   const variableInnecesaria = "Este es un error de linting";
+  console.log(variableInexistente)
   return (
     <div className="page">
       <div className="home-hero">
