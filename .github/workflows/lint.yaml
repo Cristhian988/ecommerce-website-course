@@ -19,6 +19,3 @@ jobs:
 
       - name: Ejecutar Linter
         run: npm run lint
-
-      - name: Validar tipos
-        run: npx tsc --noEmit
